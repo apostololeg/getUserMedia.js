@@ -9,6 +9,8 @@
 
 	var App = {
 
+		var video = document.querySelector('video');
+
 		init: function () {
 
 			// The shim requires options to be supplied for it's configuration,
@@ -16,8 +18,6 @@
 			// demo specific and should be used for reference within this context
 			// only
 			if ( !!this.options ) {
-
-				var video = document.querySelector('video');
 
 				this.pos = 0;
 				this.cam = null;
