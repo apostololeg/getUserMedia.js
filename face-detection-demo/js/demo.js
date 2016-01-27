@@ -40,19 +40,16 @@
 
 		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-		if (effect === 'glasses') {
+		var comp = ccv.detect_objects({
+			"canvas": (facialDetectionCanvas),
+			"cascade": cascade,
+			"interval": 5,
+			"min_neighbors": 1
+		});
 
-			var comp = ccv.detect_objects({
-				"canvas": (facialDetectionCanvas),
-				"cascade": cascade,
-				"interval": 5,
-				"min_neighbors": 1
-			});
-
-			// Draw glasses on everyone!
-			for (i = 0; i < comp.length; i++) {
-				ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-			}
+		// Draw glasses on everyone!
+		for (i = 0; i < comp.length; i++) {
+			ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
 		}
 	};
 
