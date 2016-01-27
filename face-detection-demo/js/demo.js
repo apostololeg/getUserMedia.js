@@ -26,10 +26,34 @@
 
 	var facialDetectionButton = document.getElementById('detectFaces');
 	facialDetectionButton.onclick = function() {
-	  canvas.width = video.videoWidth;
-	  canvas.height = video.videoHeight;
-	  canvas.getContext('2d').
-	    drawImage(video, 0, 0, canvas.width, canvas.height);
+	  //facialDetectionCanvas.width = video.videoWidth;
+	  //facialDetectionCanvas.height = video.videoHeight;
+	  //facialDetectionCanvas.getContext('2d').
+	  //drawImage(video, 0, 0, canvas.width, canvas.height);
+	  	var glasses, canvas, ctx, pixels, i;
+
+		glasses = new Image();
+		glasses.src = "js/glasses/i/glasses.png";
+		ctx = facialDetectionCanvas.getContext("2d");
+
+		ctx.drawImage(facialDetectionCanvas, 0, 0, 520, 426);
+
+		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+		if (effect === 'glasses') {
+
+			var comp = ccv.detect_objects({
+				"canvas": (facialDetectionCanvas),
+				"cascade": cascade,
+				"interval": 5,
+				"min_neighbors": 1
+			});
+
+			// Draw glasses on everyone!
+			for (i = 0; i < comp.length; i++) {
+				ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
+			}
+		}
 	};
 
 	var constraints = {
