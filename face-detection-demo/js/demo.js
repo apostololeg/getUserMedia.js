@@ -52,6 +52,9 @@
 	//navigator.getUserMedia(constraints, successCallback, errorCallback);
 	getUserMedia(constraints, successCallback, errorCallback);
 
+	// Initialize webcam options for fallback
+	window.webcam = this.options;
+
 	/*var App = {
 
 		init: function () {
