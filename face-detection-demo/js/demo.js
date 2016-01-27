@@ -16,9 +16,16 @@
 	canvas.height = 240;
 
 	//var button = document.querySelector('button');
-	var button = document.getElementById('takeSnapshot');
+	var snapshotButton = document.getElementById('takeSnapshot');
+	snapshotButton.onclick = function() {
+	  canvas.width = video.videoWidth;
+	  canvas.height = video.videoHeight;
+	  canvas.getContext('2d').
+	    drawImage(video, 0, 0, canvas.width, canvas.height);
+	};
+
 	var facialDetectionButton = document.getElementById('detectFaces');
-	button.onclick = function() {
+	facialDetectionButton.onclick = function() {
 	  canvas.width = video.videoWidth;
 	  canvas.height = video.videoHeight;
 	  canvas.getContext('2d').
@@ -40,18 +47,6 @@
 	}
 
 	navigator.getUserMedia(constraints, successCallback, errorCallback);
-
-	function addEvent (type, obj, fn) {
-		if (obj.attachEvent) {
-			obj['e' + type + fn] = fn;
-			obj[type + fn] = function () {
-				obj['e' + type + fn](window.event);
-			}
-			obj.attachEvent('on' + type, obj[type + fn]);
-		} else {
-			obj.addEventListener(type, fn, false);
-		}
-	}
 
 	/*var App = {
 
