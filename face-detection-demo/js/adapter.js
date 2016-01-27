@@ -1524,13 +1524,13 @@ if (typeof window === 'undefined' || !window.navigator) {
   var source, el, cam;
 
   source = '<!--[if IE]>'+
-  '<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + options.width + '" height="' + options.height + '">'+
-  '<param name="movie" value="' + options.swffile + '" />'+
+  '<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + constraints.width + '" height="' + constraints.height + '">'+
+  '<param name="movie" value="' + constraints.swffile + '" />'+
   '<![endif]-->'+
   '<!--[if !IE]>-->'+
-  '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '">'+
+  '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + constraints.swffile + '" width="' + constraints.width + '" height="' + constraints.height + '">'+
   '<!--<![endif]-->'+
-  '<param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" />'+
+  '<param name="FlashVars" value="mode=' + constraints.mode + '&amp;quality=' + constraints.quality + '" />'+
   '<param name="allowScriptAccess" value="always" />'+
   '</object>';
   el = document.getElementById(options.el);
@@ -1568,8 +1568,8 @@ if (typeof window === 'undefined' || !window.navigator) {
           };
 
           // options.onLoad();
-          options.context = 'flash';
-          options.onLoad = successCallback;
+          constraints.context = 'flash';
+          constraints.onLoad = successCallback;
 
       } else if (run === 0) {
           // options.debug("error", "Flash movie not yet registered!");
