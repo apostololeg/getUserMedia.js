@@ -18,7 +18,7 @@
 		if (constraints.context === 'webrtc') {
 			var ctx = canvas.getContext("2d");
 			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-		} else if(App.options.context === 'flash'){
+		} else if(constraints.context === 'flash'){
             window.webcam.capture();
         }
         else{
