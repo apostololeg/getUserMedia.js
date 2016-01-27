@@ -31,12 +31,14 @@
 	  //drawImage(video, 0, 0, canvas.width, canvas.height);
 	  	var glasses, ctx, pixels, i;
 
-		glasses = new Image();
+	  	var sourceSelector = "#output", source = document.querySelector(sourceSelector);
+
+		/*glasses = new Image();
 		glasses.src = "js/glasses/i/glasses.png";
 		ctx = facialDetectionCanvas.getContext("2d");
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);*/
 
 		var comp = ccv.detect_objects({
 			"canvas": (facialDetectionCanvas),
@@ -45,10 +47,18 @@
 			"min_neighbors": 1
 		});
 
-		// Draw glasses on everyone!
+		/*// Draw glasses on everyone!
 		for (i = 0; i < comp.length; i++) {
 			ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-		}
+		}*/
+
+		if(comp.length == 1) {
+            $$(sourceSelector).css('border-color', 'green');
+        } else {
+            $$(sourceSelector).css('border-color', 'red');
+            //TODO: make this an XLIFF message on the client side
+            alert('No face was detected, please take another picture');
+        }
 	};
 
 	var constraints = {
