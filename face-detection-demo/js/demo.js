@@ -60,6 +60,8 @@
 	try {
 		navigator.getUserMedia(constraints, successCallback, errorCallback);
 	} catch (e) {
+		// Initialize webcam options for fallback
+		window.webcam = constraints;
 		// Fallback to flash
 		var source, el, cam;
 
