@@ -15,10 +15,15 @@
 
 	var facialDetectionButton = document.getElementById('detectFaces');
 	facialDetectionButton.onclick = function() {
-		var ctx = canvas.getContext("2d");
-		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		var pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		if (constraints.context === 'webrtc') {
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+		} else if(App.options.context === 'flash'){
+            window.webcam.capture();
+        }
+        else{
+            alert('No context was supplied to getSnapshot()');
+        }
 
 		var comp = ccv.detect_objects({
 			"canvas": (canvas),
