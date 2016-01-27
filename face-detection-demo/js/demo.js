@@ -33,7 +33,8 @@
 
 		glasses = new Image();
 		glasses.src = "js/glasses/i/glasses.png";
-		ctx = facialDetectionCanvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+		ctx = facialDetectionCanvas.getContext("2d");
+		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
