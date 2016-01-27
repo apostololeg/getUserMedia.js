@@ -17,6 +17,8 @@
 			// only
 			if ( !!this.options ) {
 
+				var video = document.querySelector('video');
+
 				this.pos = 0;
 				this.cam = null;
 				this.filter_on = false;
@@ -140,7 +142,7 @@
 					stream.stop();
 					streamError();
 				};*/
-				
+
 				window.stream = stream; // make stream available to browser console
   				video.srcObject = stream;
 			} else{
