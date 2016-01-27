@@ -57,9 +57,9 @@
 	  console.log('navigator.getUserMedia error: ', error);
 	}
 
-	if(navigator.getUserMedia) {
+	try {
 		navigator.getUserMedia(constraints, successCallback, errorCallback);
-	} else {
+	} catch (e) {
 		// Fallback to flash
 		var source, el, cam;
 
