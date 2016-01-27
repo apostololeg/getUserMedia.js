@@ -49,7 +49,8 @@
 	  console.log('navigator.getUserMedia error: ', error);
 	}
 
-	navigator.getUserMedia(constraints, successCallback, errorCallback);
+	//navigator.getUserMedia(constraints, successCallback, errorCallback);
+	getUserMedia(constraints, successCallback, errorCallback);
 
 	/*var App = {
 
