@@ -119,7 +119,7 @@
 
 			if (App.options.context === 'webrtc') {
 
-				var video = App.options.videoEl;
+				/*var video = App.options.videoEl;
 				
 				if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 		
@@ -139,8 +139,10 @@
 				video.onerror = function () {
 					stream.stop();
 					streamError();
-				};
-
+				};*/
+				
+				window.stream = stream; // make stream available to browser console
+  				video.srcObject = stream;
 			} else{
 				// flash context
 			}
