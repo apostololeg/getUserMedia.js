@@ -10,11 +10,14 @@
 	// Put variables in global scope to make them available to the browser console.
 	var video = document.querySelector('video');
 	//var canvas = window.canvas = document.querySelector('canvas');
-	var canvas = document.getElementById("canvas");
+	var canvas = document.getElementById('canvas');
+	var facialDetectionCanvas = document.getElementById('output');
 	canvas.width = 320;
 	canvas.height = 240;
 
-	var button = document.querySelector('button');
+	//var button = document.querySelector('button');
+	var button = document.getElementById('takeSnapshot');
+	var facialDetectionButton = document.getElementById('detectFaces');
 	button.onclick = function() {
 	  canvas.width = video.videoWidth;
 	  canvas.height = video.videoHeight;
