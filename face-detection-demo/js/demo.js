@@ -45,7 +45,40 @@
 	  swffile: "../dist/fallback/jscam_canvas_only.swf",
 	  quality: 85,
 	  context: "",
-	  el: "webcam"
+	  el: "webcam",
+	  	debug: function () {},
+		// replace previous line with next three if you want debug messages from the SWF to appear as JS alerts
+		/*debug: function (type, string) {
+		    alert(type + ": " + string);
+		},*/
+		onCapture: function () {
+		    window.webcam.save();
+		},
+		onTick: function () {},
+		onSave: function (data) {
+
+		    var col = data.split(";"),
+		        img = App.image,
+		        tmp = null,
+		        w = this.width,
+		        h = this.height;
+
+		    for (var i = 0; i < w; i++) {
+		        tmp = parseInt(col[i], 10);
+		        img.data[App.pos + 0] = (tmp >> 16) & 0xff;
+		        img.data[App.pos + 1] = (tmp >> 8) & 0xff;
+		        img.data[App.pos + 2] = tmp & 0xff;
+		        img.data[App.pos + 3] = 0xff;
+		        App.pos += 4;
+		    }
+
+		    if (App.pos >= 4 * w * h) {
+		        App.ctx.putImageData(img, 0, 0);
+		        App.pos = 0;
+		    }
+
+		},
+		onLoad: function () {}
 	};
 
 	function successCallback(stream) {
