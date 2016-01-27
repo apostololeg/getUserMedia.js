@@ -9,38 +9,28 @@
 
 	// Put variables in global scope to make them available to the browser console.
 	var video = document.querySelector('video');
-	//var canvas = window.canvas = document.querySelector('canvas');
-	var canvas = document.getElementById('canvas');
-	var facialDetectionCanvas = document.getElementById('output');
+	var canvas = document.getElementById('output');
 	canvas.width = 320;
 	canvas.height = 240;
 
-	//var button = document.querySelector('button');
-	var snapshotButton = document.getElementById('takeSnapshot');
-	snapshotButton.onclick = function() {
-	  canvas.width = video.videoWidth;
-	  canvas.height = video.videoHeight;
-	  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-	};
-
 	var facialDetectionButton = document.getElementById('detectFaces');
 	facialDetectionButton.onclick = function() {
-		var ctx = facialDetectionCanvas.getContext("2d");
+		var ctx = canvas.getContext("2d");
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		var pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
 		var comp = ccv.detect_objects({
-			"canvas": (facialDetectionCanvas),
+			"canvas": (canvas),
 			"cascade": cascade,
 			"interval": 5,
 			"min_neighbors": 1
 		});
 
 		if(comp.length == 1) {
-            facialDetectionCanvas.style.borderColor = 'green';
+            canvas.style.borderColor = 'green';
         } else {
-            facialDetectionCanvas.style.borderColor = 'red';
+            canvas.style.borderColor = 'red';
             alert('No face was detected, please take another picture');
         }
 	};
