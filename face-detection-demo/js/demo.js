@@ -30,7 +30,7 @@
 	  //facialDetectionCanvas.height = video.videoHeight;
 	  //facialDetectionCanvas.getContext('2d').
 	  //drawImage(video, 0, 0, canvas.width, canvas.height);
-	  	var glasses, canvas, ctx, pixels, i;
+	  	var glasses, ctx, pixels, i;
 
 		glasses = new Image();
 		glasses.src = "js/glasses/i/glasses.png";
