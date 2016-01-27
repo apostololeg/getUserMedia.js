@@ -49,11 +49,11 @@
 	  console.log('navigator.getUserMedia error: ', error);
 	}
 
-	//navigator.getUserMedia(constraints, successCallback, errorCallback);
-	getUserMedia(constraints, successCallback, errorCallback);
+	navigator.getUserMedia(constraints, successCallback, errorCallback);
+	//getUserMedia(constraints, successCallback, errorCallback);
 
 	// Initialize webcam options for fallback
-	window.webcam = this.options;
+	//window.webcam = this.options;
 
 	/*var App = {
 
