@@ -56,7 +56,69 @@
 	  console.log('navigator.getUserMedia error: ', error);
 	}
 
-	navigator.getUserMedia(constraints, successCallback, errorCallback);
+	if(navigator.getUserMedia) {
+		navigator.getUserMedia(constraints, successCallback, errorCallback);
+	} else {
+		// Fallback to flash
+		var source, el, cam;
+
+		source = '<!--[if IE]>'+
+		'<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + constraints.width + '" height="' + constraints.height + '">'+
+		'<param name="movie" value="' + constraints.swffile + '" />'+
+		'<![endif]-->'+
+		'<!--[if !IE]>-->'+
+		'<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + constraints.swffile + '" width="' + constraints.width + '" height="' + constraints.height + '">'+
+		'<!--<![endif]-->'+
+		'<param name="FlashVars" value="mode=' + constraints.mode + '&amp;quality=' + constraints.quality + '" />'+
+		'<param name="allowScriptAccess" value="always" />'+
+		'</object>';
+		el = document.getElementById(options.el);
+		el.innerHTML = source;
+
+
+		(function register(run) {
+
+		  cam = document.getElementById('XwebcamXobjectX');
+
+		  if (cam.capture !== undefined) {
+
+		      // Simple callback methods are not allowed 
+		      options.capture = function (x) {
+		          try {
+		              return cam.capture(x);
+		          } catch (e) {}
+		      };
+		      options.save = function (x) {
+		          try {
+		              return cam.save(x);
+		          } catch (e) {
+
+		          }
+		      };
+		      options.setCamera = function (x) {
+		          try {
+		              return cam.setCamera(x);
+		          } catch (e) {}
+		      };
+		      options.getCameraList = function () {
+		          try {
+		              return cam.getCameraList();
+		          } catch (e) {}
+		      };
+
+		      // options.onLoad();
+		      constraints.context = 'flash';
+		      constraints.onLoad = successCallback;
+
+		  } else if (run === 0) {
+		      // options.debug("error", "Flash movie not yet registered!");
+		      errorCallback();
+		  } else {
+		      // Flash interface not ready yet 
+		      window.setTimeout(register, 1000 * (4 - run), run - 1);
+		  }
+		}(3));
+	}
 	//getUserMedia(constraints, successCallback, errorCallback);
 
 	// Initialize webcam options for fallback
