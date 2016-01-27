@@ -97,6 +97,7 @@
 
 	try {
 		navigator.getUserMedia(constraints, successCallback, errorCallback);
+		constraints.context = 'webrtc';
 	} catch (e) {
 		// Initialize webcam options for fallback
 		window.webcam = constraints;
