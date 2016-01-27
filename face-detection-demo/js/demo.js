@@ -25,20 +25,10 @@
 
 	var facialDetectionButton = document.getElementById('detectFaces');
 	facialDetectionButton.onclick = function() {
-	  //facialDetectionCanvas.width = video.videoWidth;
-	  //facialDetectionCanvas.height = video.videoHeight;
-	  //facialDetectionCanvas.getContext('2d').
-	  //drawImage(video, 0, 0, canvas.width, canvas.height);
-	  	var glasses, ctx, pixels, i;
-
-	  	var sourceSelector = "#output", source = document.querySelector(sourceSelector);
-
-		/*glasses = new Image();
-		glasses.src = "js/glasses/i/glasses.png";*/
-		ctx = facialDetectionCanvas.getContext("2d");
+		var ctx = facialDetectionCanvas.getContext("2d");
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		var pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
 		var comp = ccv.detect_objects({
 			"canvas": (facialDetectionCanvas),
@@ -47,18 +37,10 @@
 			"min_neighbors": 1
 		});
 
-		/*// Draw glasses on everyone!
-		for (i = 0; i < comp.length; i++) {
-			ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-		}*/
-
 		if(comp.length == 1) {
-            //$$(sourceSelector).css('border-color', 'green');
             facialDetectionCanvas.style.borderColor = 'green';
         } else {
-            //$$(sourceSelector).css('border-color', 'red');
             facialDetectionCanvas.style.borderColor = 'red';
-            //TODO: make this an XLIFF message on the client side
             alert('No face was detected, please take another picture');
         }
 	};
