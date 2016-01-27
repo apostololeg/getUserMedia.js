@@ -119,24 +119,24 @@
 		  if (cam.capture !== undefined) {
 
 		      // Simple callback methods are not allowed 
-		      options.capture = function (x) {
+		      constraints.capture = function (x) {
 		          try {
 		              return cam.capture(x);
 		          } catch (e) {}
 		      };
-		      options.save = function (x) {
+		      constraints.save = function (x) {
 		          try {
 		              return cam.save(x);
 		          } catch (e) {
 
 		          }
 		      };
-		      options.setCamera = function (x) {
+		      constraints.setCamera = function (x) {
 		          try {
 		              return cam.setCamera(x);
 		          } catch (e) {}
 		      };
-		      options.getCameraList = function () {
+		      constraints.getCameraList = function () {
 		          try {
 		              return cam.getCameraList();
 		          } catch (e) {}
