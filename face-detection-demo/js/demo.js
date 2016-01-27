@@ -9,7 +9,8 @@
 
 	// Put variables in global scope to make them available to the browser console.
 	var video = document.querySelector('video');
-	var canvas = window.canvas = document.querySelector('canvas');
+	//var canvas = window.canvas = document.querySelector('canvas');
+	var canvas = document.getElementById("canvas");
 	canvas.width = 320;
 	canvas.height = 240;
 
@@ -36,6 +37,18 @@
 	}
 
 	navigator.getUserMedia(constraints, successCallback, errorCallback);
+
+	function addEvent (type, obj, fn) {
+		if (obj.attachEvent) {
+			obj['e' + type + fn] = fn;
+			obj[type + fn] = function () {
+				obj['e' + type + fn](window.event);
+			}
+			obj.attachEvent('on' + type, obj[type + fn]);
+		} else {
+			obj.addEventListener(type, fn, false);
+		}
+	}
 
 	/*var App = {
 
