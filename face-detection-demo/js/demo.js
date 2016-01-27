@@ -99,6 +99,9 @@
 		navigator.getUserMedia(constraints, successCallback, errorCallback);
 		constraints.context = 'webrtc';
 	} catch (e) {
+		// rename the video element and then the fallback div element
+		video.id = 'webcamFailed';
+		document.getElementById('webcamFallback').id = 'webcam';
 		// Initialize webcam options for fallback
 		window.webcam = constraints;
 		// Fallback to flash
