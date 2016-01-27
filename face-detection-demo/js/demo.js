@@ -45,6 +45,7 @@
 	  swffile: "../dist/fallback/jscam_canvas_only.swf",
 	  quality: 85,
 	  context: "",
+	  el: "webcam"
 	};
 
 	function successCallback(stream) {
@@ -72,7 +73,7 @@
 		'<param name="FlashVars" value="mode=' + constraints.mode + '&amp;quality=' + constraints.quality + '" />'+
 		'<param name="allowScriptAccess" value="always" />'+
 		'</object>';
-		el = document.getElementById(options.el);
+		el = document.getElementById(constraints.el);
 		el.innerHTML = source;
 
 
