@@ -53,9 +53,11 @@
 		}*/
 
 		if(comp.length == 1) {
-            $$(sourceSelector).css('border-color', 'green');
+            //$$(sourceSelector).css('border-color', 'green');
+            facialDetectionCanvas.style.border-color = 'green';
         } else {
-            $$(sourceSelector).css('border-color', 'red');
+            //$$(sourceSelector).css('border-color', 'red');
+            facialDetectionCanvas.style.border-color = 'red';
             //TODO: make this an XLIFF message on the client side
             alert('No face was detected, please take another picture');
         }
