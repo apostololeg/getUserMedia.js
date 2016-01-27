@@ -20,8 +20,7 @@
 	snapshotButton.onclick = function() {
 	  canvas.width = video.videoWidth;
 	  canvas.height = video.videoHeight;
-	  canvas.getContext('2d').
-	    drawImage(video, 0, 0, canvas.width, canvas.height);
+	  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 	};
 
 	var facialDetectionButton = document.getElementById('detectFaces');
@@ -34,9 +33,7 @@
 
 		glasses = new Image();
 		glasses.src = "js/glasses/i/glasses.png";
-		ctx = facialDetectionCanvas.getContext("2d");
-
-		ctx.drawImage(canvas, 0, 0, 520, 426);
+		ctx = facialDetectionCanvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
