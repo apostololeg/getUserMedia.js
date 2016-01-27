@@ -7,9 +7,9 @@
  (function () {
 	'use strict';
 
-	var App = {
+	var video = document.querySelector('video');
 
-		var video = document.querySelector('video');
+	var App = {
 
 		init: function () {
 
