@@ -101,6 +101,8 @@
 	} catch (e) {
 		// rename the video element and then the fallback div element
 		video.id = 'webcamFailed';
+		video.width = 0;
+		video.height = 0;
 		document.getElementById('webcamFallback').id = 'webcam';
 		// Initialize webcam options for fallback
 		window.webcam = constraints;
