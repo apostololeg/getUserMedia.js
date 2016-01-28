@@ -87,8 +87,10 @@
 	};
 
 	function successCallback(stream) {
-	  window.stream = stream; // make stream available to browser console
-	  video.srcObject = stream;
+	  	if (constraints.context === 'webrtc') {
+			window.stream = stream; // make stream available to browser console
+		  	video.srcObject = stream;
+		}
 	}
 
 	function errorCallback(error) {
