@@ -51,11 +51,11 @@
 	  quality: 85,
 	  context: "",
 	  el: "webcam",
-	  	debug: function () {},
+	  	//debug: function () {},
 		// replace previous line with next three if you want debug messages from the SWF to appear as JS alerts
-		/*debug: function (type, string) {
+		debug: function (type, string) {
 		    alert(type + ": " + string);
-		},*/
+		},
 		onCapture: function () {
 		    window.webcam.save();
 		},
