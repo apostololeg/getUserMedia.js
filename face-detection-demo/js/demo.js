@@ -12,6 +12,13 @@
 	var canvas = document.getElementById('output');
 	canvas.width = 320;
 	canvas.height = 240;
+    var App =
+    {
+        pos: 0,
+        img: new Image(),
+        ctx: canvas.getContext('2d'),
+        image: canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height)
+    };
 
 	var facialDetectionButton = document.getElementById('detectFaces');
 	facialDetectionButton.onclick = function() {
