@@ -77,6 +77,12 @@
             } else {
                 // Act as a plain getUserMedia shield if no fallback is required
                 if (options.noFallback === undefined || options.noFallback === false) {
+                    //////////////////////////////////////////////////////////////
+                    // This doesn't seem to actually be called, instead, the 
+                    // try/catch in demo.js is actually where the flash error is
+                    // caught
+                    //////////////////////////////////////////////////////////////
+                    
                     // must have Flash installed in order for the fallback to work
                     var hasFlash = false;
                     try {

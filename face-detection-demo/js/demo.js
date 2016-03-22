@@ -134,7 +134,7 @@
             }
         }
         if (!hasFlash) {
-            flashErrorCallback();
+            flashError();
         } else {
 			// rename the video element and then the fallback div element
 			video.id = 'webcamFailed';
