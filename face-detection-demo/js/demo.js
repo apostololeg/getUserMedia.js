@@ -7,6 +7,8 @@
  (function () {
 	'use strict';
 
+    var $$ = jQuery.noConflict();
+
 	// Put variables in global scope to make them available to the browser console.
 	var video = document.querySelector('video');
 	var canvas = document.getElementById('output');
