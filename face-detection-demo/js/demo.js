@@ -54,7 +54,7 @@
 	  height: 240,
 	  mode: "callback",
 	  // callback | save | stream
-	  swffile: "../dist/fallback/jscam_canvas_only.swf",
+	  swffile: "../dist/fallback/jscam_canvas_only.swf?timestamp=" + new Date().getTime(), // add unique item to URL to prevent IE11/secure browser SWF caching issue
 	  quality: 85,
 	  context: "",
 	  el: "webcam",
@@ -119,71 +119,89 @@
 		navigator.getUserMedia(constraints, successCallback, errorCallback, flashError);
 		constraints.context = 'webrtc';
 	} catch (e) {
-		// rename the video element and then the fallback div element
-		video.id = 'webcamFailed';
-		video.width = 0;
-		video.height = 0;
-		document.getElementById('webcamFallback').id = 'webcam';
-		// Initialize webcam options for fallback
-		window.webcam = constraints;
-		// Fallback to flash
-		var source, el, cam;
+		// must have Flash installed in order for the fallback to work
+        var hasFlash = false;
+        try {
+            var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+            if (fo) {
+                hasFlash = true;
+            }
+        } catch (e) {
+            if (navigator.mimeTypes
+            && navigator.mimeTypes['application/x-shockwave-flash'] != undefined
+            && navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin) {
+                hasFlash = true;
+            }
+        }
+        if (!hasFlash) {
+            flashErrorCallback();
+        } else {
+			// rename the video element and then the fallback div element
+			video.id = 'webcamFailed';
+			video.width = 0;
+			video.height = 0;
+			document.getElementById('webcamFallback').id = 'webcam';
+			// Initialize webcam options for fallback
+			window.webcam = constraints;
+			// Fallback to flash
+			var source, el, cam;
 
-		source = '<!--[if IE]>'+
-		'<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + constraints.width + '" height="' + constraints.height + '">'+
-		'<param name="movie" value="' + constraints.swffile + '" />'+
-		'<![endif]-->'+
-		'<!--[if !IE]>-->'+
-		'<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + constraints.swffile + '" width="' + constraints.width + '" height="' + constraints.height + '">'+
-		'<!--<![endif]-->'+
-		'<param name="FlashVars" value="mode=' + constraints.mode + '&amp;quality=' + constraints.quality + '" />'+
-		'<param name="allowScriptAccess" value="always" />'+
-		'</object>';
-		el = document.getElementById(constraints.el);
-		el.innerHTML = source;
+			source = '<!--[if IE]>'+
+			'<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + constraints.width + '" height="' + constraints.height + '">'+
+			'<param name="movie" value="' + constraints.swffile + '" />'+
+			'<![endif]-->'+
+			'<!--[if !IE]>-->'+
+			'<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + constraints.swffile + '" width="' + constraints.width + '" height="' + constraints.height + '">'+
+			'<!--<![endif]-->'+
+			'<param name="FlashVars" value="mode=' + constraints.mode + '&amp;quality=' + constraints.quality + '" />'+
+			'<param name="allowScriptAccess" value="always" />'+
+			'</object>';
+			el = document.getElementById(constraints.el);
+			el.innerHTML = source;
 
 
-		(function register(run) {
+			(function register(run) {
 
-		  cam = document.getElementById('XwebcamXobjectX');
+			  cam = document.getElementById('XwebcamXobjectX');
 
-		  if (cam.capture !== undefined) {
+			  if (cam.capture !== undefined) {
 
-		      // Simple callback methods are not allowed 
-		      constraints.capture = function (x) {
-		          try {
-		              return cam.capture(x);
-		          } catch (e) {}
-		      };
-		      constraints.save = function (x) {
-		          try {
-		              return cam.save(x);
-		          } catch (e) {
+			      // Simple callback methods are not allowed 
+			      constraints.capture = function (x) {
+			          try {
+			              return cam.capture(x);
+			          } catch (e) {}
+			      };
+			      constraints.save = function (x) {
+			          try {
+			              return cam.save(x);
+			          } catch (e) {
 
-		          }
-		      };
-		      constraints.setCamera = function (x) {
-		          try {
-		              return cam.setCamera(x);
-		          } catch (e) {}
-		      };
-		      constraints.getCameraList = function () {
-		          try {
-		              return cam.getCameraList();
-		          } catch (e) {}
-		      };
+			          }
+			      };
+			      constraints.setCamera = function (x) {
+			          try {
+			              return cam.setCamera(x);
+			          } catch (e) {}
+			      };
+			      constraints.getCameraList = function () {
+			          try {
+			              return cam.getCameraList();
+			          } catch (e) {}
+			      };
 
-		      // options.onLoad();
-		      constraints.context = 'flash';
-		      constraints.onLoad = successCallback;
+			      // options.onLoad();
+			      constraints.context = 'flash';
+			      constraints.onLoad = successCallback;
 
-		  } else if (run === 0) {
-		      // options.debug("error", "Flash movie not yet registered!");
-		      errorCallback();
-		  } else {
-		      // Flash interface not ready yet 
-		      window.setTimeout(register, 1000 * (4 - run), run - 1);
-		  }
-		}(3));
+			  } else if (run === 0) {
+			      // options.debug("error", "Flash movie not yet registered!");
+			      errorCallback();
+			  } else {
+			      // Flash interface not ready yet 
+			      window.setTimeout(register, 1000 * (4 - run), run - 1);
+			  }
+			}(3));
+		}
 	}
 })();
