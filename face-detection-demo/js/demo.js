@@ -111,9 +111,6 @@
         $$("#photoCapture").hide();
         //show error message
         $$("#flashError").removeClass('outOfTheWay');
-        //set "flag" so that photo saving is skipped
-        document.getElementById("candidatePhotoDataURL").value = "SKIPPED";
-        document.getElementById("photoSkippedDueToLimitations").value = "true";
         console.error('Flash was not detected');
     }
 
