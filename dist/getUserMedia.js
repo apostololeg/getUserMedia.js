@@ -6,7 +6,7 @@
 */;(function (window, document) {
     "use strict";
 
-    window.getUserMedia = function (options, successCallback, errorCallback) {
+    window.getUserMedia = function (options, successCallback, errorCallback, flashErrorCallback) {
 
         // Options are required
         if (options !== undefined) {
@@ -75,70 +75,85 @@
                     }
                 }
             } else {
-
                 // Act as a plain getUserMedia shield if no fallback is required
                 if (options.noFallback === undefined || options.noFallback === false) {
-
-                    // Fallback to flash
-                    var source, el, cam;
-
-                    source = '<!--[if IE]>'+
-                    '<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + options.width + '" height="' + options.height + '">'+
-                    '<param name="movie" value="' + options.swffile + '" />'+
-                    '<![endif]-->'+
-                    '<!--[if !IE]>-->'+
-                    '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '">'+
-                    '<!--<![endif]-->'+
-                    '<param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" />'+
-                    '<param name="allowScriptAccess" value="always" />'+
-                    '</object>';
-                    el = document.getElementById(options.el);
-                    el.innerHTML = source;
-
-
-                    (function register(run) {
-
-                        cam = document.getElementById('XwebcamXobjectX');
-
-                        if (cam.capture !== undefined) {
-
-                            // Simple callback methods are not allowed 
-                            options.capture = function (x) {
-                                try {
-                                    return cam.capture(x);
-                                } catch (e) {}
-                            };
-                            options.save = function (x) {
-                                try {
-                                    return cam.save(x);
-                                } catch (e) {
-
-                                }
-                            };
-                            options.setCamera = function (x) {
-                                try {
-                                    return cam.setCamera(x);
-                                } catch (e) {}
-                            };
-                            options.getCameraList = function () {
-                                try {
-                                    return cam.getCameraList();
-                                } catch (e) {}
-                            };
-
-                            // options.onLoad();
-                            options.context = 'flash';
-                            options.onLoad = successCallback;
-
-                        } else if (run === 0) {
-                            // options.debug("error", "Flash movie not yet registered!");
-                            errorCallback();
-                        } else {
-                            // Flash interface not ready yet 
-                            window.setTimeout(register, 1000 * (4 - run), run - 1);
+                    // must have Flash installed in order for the fallback to work
+                    var hasFlash = false;
+                    try {
+                        var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+                        if (fo) {
+                            hasFlash = true;
                         }
-                    }(3));
+                    } catch (e) {
+                        if (navigator.mimeTypes
+                        && navigator.mimeTypes['application/x-shockwave-flash'] != undefined
+                        && navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin) {
+                            hasFlash = true;
+                        }
+                    }
+                    if (!hasFlash) {
+                        flashErrorCallback();
+                    } else {
+                        // Fallback to flash
+                        var source, el, cam;
 
+                        source = '<!--[if IE]>'+
+                        '<object id="XwebcamXobjectX" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + options.width + '" height="' + options.height + '">'+
+                        '<param name="movie" value="' + options.swffile + '" />'+
+                        '<![endif]-->'+
+                        '<!--[if !IE]>-->'+
+                        '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '">'+
+                        '<!--<![endif]-->'+
+                        '<param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" />'+
+                        '<param name="allowScriptAccess" value="always" />'+
+                        '</object>';
+                        el = document.getElementById(options.el);
+                        el.innerHTML = source;
+
+
+                        (function register(run) {
+
+                            cam = document.getElementById('XwebcamXobjectX');
+
+                            if (cam.capture !== undefined) {
+
+                                // Simple callback methods are not allowed 
+                                options.capture = function (x) {
+                                    try {
+                                        return cam.capture(x);
+                                    } catch (e) {}
+                                };
+                                options.save = function (x) {
+                                    try {
+                                        return cam.save(x);
+                                    } catch (e) {
+
+                                    }
+                                };
+                                options.setCamera = function (x) {
+                                    try {
+                                        return cam.setCamera(x);
+                                    } catch (e) {}
+                                };
+                                options.getCameraList = function () {
+                                    try {
+                                        return cam.getCameraList();
+                                    } catch (e) {}
+                                };
+
+                                // options.onLoad();
+                                options.context = 'flash';
+                                options.onLoad = successCallback;
+
+                            } else if (run === 0) {
+                                // options.debug("error", "Flash movie not yet registered!");
+                                errorCallback();
+                            } else {
+                                // Flash interface not ready yet 
+                                window.setTimeout(register, 1000 * (4 - run), run - 1);
+                            }
+                        }(3));
+                    }
                 }
 
             }
