@@ -16,7 +16,7 @@
 	canvas.height = 240;
 	G_vmlCanvasManager.initElement(canvas);
 	var outputCanvasContext = canvas.getContext('2d');
-	var outputCanvasImage = outputCanvasContext.getImageData(0, 0, canvas.width, canvas.height);
+	var outputCanvasImage = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
     
 	//////////////object doesn't support property or method 'getContext'
     var App =
