@@ -14,7 +14,6 @@
 	var canvas = document.getElementById('output');
 	canvas.width = 320;
 	canvas.height = 240;
-	G_vmlCanvasManager.initElement(canvas);
 	var outputCanvasContext = canvas.getContext('2d');
 	var outputCanvasImage = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
     
