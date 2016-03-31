@@ -29,7 +29,7 @@ var webrtcUtils = {
         typeof require === 'function' && typeof define === 'function') {
       return;
     }
-    console.log.apply(console, arguments);
+    /////////////////////////////console.log.apply(console, arguments);
   },
   extractVersion: function(uastring, expr, pos) {
     var match = uastring.match(expr);
@@ -814,7 +814,7 @@ if (typeof window === 'undefined' || !window.navigator) {
         })[0].substr(12),
         password: lines.filter(function(line) {
           return line.indexOf('a=ice-pwd:') === 0;
-        })[0].substr(10),
+        })[0].substr(10)
       };
       return iceParameters;
     };
