@@ -54,10 +54,17 @@
 	    <div class="row">
 	    	<p>Please make sure you are running this demo on a HTTP server :) If your browser supports getUserMedia()/WebRTC and it has been enabled, the native capabilities of your browser will be used for this page. If not, a Flash fallback will be used which will keep the entire demo entirely functional. If for any reason the face detection doesn't detect your face, please try taking another picture with your face positoned more centrally.</p>
 	    </div>
-	    	<div class="row">
-		    	<div class="span4">&nbsp;</div>
-		    	<div class="span4"><button class="btn btn-primary btn-large" id="detectFaces">Take picture</button></div>
-		    	<div class="span4">&nbsp;</div>
+	    <div class="row">
+	    	<div class="span12">
+	    		<script type="text/javascript">
+	    			document.write(navigator.userAgent);
+	    		</script>
+	    	</div>
+	    </div>	
+    	<div class="row">
+	    	<div class="span4">&nbsp;</div>
+	    	<div class="span4"><button class="btn btn-primary btn-large" id="detectFaces">Take picture</button></div>
+	    	<div class="span4">&nbsp;</div>
   		</div>
 	  </div>
 	</div>
