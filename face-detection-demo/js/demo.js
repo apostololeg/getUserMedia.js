@@ -10,10 +10,12 @@
     var $$ = jQuery.noConflict();
 
 	// Put variables in global scope to make them available to the browser console.
-	var video = document.querySelector('video');
+	var video = document.getElementById('webcam');
 	var canvas = document.getElementById('output');
 	canvas.width = 320;
 	canvas.height = 240;
+    
+	//////////////object doesn't support property or method 'getContext'
     var App =
     {
         pos: 0,
