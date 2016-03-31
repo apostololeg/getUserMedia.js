@@ -15,15 +15,16 @@
 	canvas.width = 320;
 	canvas.height = 240;
 	G_vmlCanvasManager.initElement(canvas);
-	var ctx = canvas.getContext('2d');
+	var outputCanvasContext = canvas.getContext('2d');
+	var outputCanvasImage = outputCanvasContext.getImageData(0, 0, canvas.width, canvas.height);
     
 	//////////////object doesn't support property or method 'getContext'
     var App =
     {
         pos: 0,
         img: new Image(),
-        ctx: ctx,
-        image: ctx.getImageData(0, 0, canvas.width, canvas.height)
+        ctx: outputCanvasContext,
+        image: outputCanvasImage
     };
 
 	var facialDetectionButton = document.getElementById('detectFaces');
